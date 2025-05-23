@@ -2,7 +2,7 @@
 
 I made a simple Python script to grab your Pocket saves before the service shuts down. This includes metadata and the full, reader‑view article text, which is more than just the links you get from an official Pocket export request.
 
-*The exporter is resumable, robust against Pocket’s time‑outs, and comes with a consumer key so it is ready to use.
+*The exporter works from the command line, is resumable, robust against Pocket’s time‑outs, and comes with a consumer key so it is ready to use.
 
 ---
 
@@ -38,14 +38,14 @@ I made a simple Python script to grab your Pocket saves before the service shuts
 * Python **3.9 or newer**
 * A Pocket **consumer key** with *Retrieve* permission
   *The repo ships with a working key baked into `pocket_export.py` with *Retrieve* permission only, so you can test immediately.*
+* A Pocket account logged in on your default web browser (tested on Chrome and Firefox on MacOS)
 
 ---
 
 ## Installation
 
 ```bash
-git clone https://github.com/<your‑user>/pocket‑archive‑exporter.git
-cd pocket‑archive‑exporter
+git clone https://github.com/mkdir-markpettyjohn/PocketRetriever.gitcd pocket‑archive‑exporter
 
 # (optional) python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
@@ -56,7 +56,6 @@ pip install -r requirements.txt
 ## Quick Start
 
 ```bash
-export POCKET_CONSUMER_KEY="<your‑key‑here>"
 python3 pocket_export.py                # JSON export in cwd
 python3 pocket_export.py --format md    # Markdown vault
 ```
@@ -131,6 +130,19 @@ python pocket_export.py --limit 100
    Writing a tiny file after each 30‑item page means a laptop sleep or CTRL‑C never loses more than a minute of work.
 
 These lessons are baked into the current script—no more empty downloads, silent limits, or lost progress.
+
+8. **Export take a lot of time**
+  If rates are similar, expect an overnight job if you have thousands of saves in Pocket.
+
+9. **It's not perfect**
+   Total items retrieved: 5010
+   Extracted 3958 articles; 1052 failures
+   Error examples:
+  • https://archive.is/B1Tcp: 429 Client Error: Too Many Requests for url: https://archive.is/B1Tcp
+  • https://ohiocapitaljournal.com/briefs/as-teacher-burnout-deepens-states-scramble-to-fill-school-job-vacancies/: 403 Client Error: Forbidden for url: https://ohiocapitaljournal.com/briefs/as-teacher-burnout-deepens-states-scramble-to-fill-school-job-vacancies/
+  • https://www.science.org/doi/10.1126/sciadv.aaw9569: 403 Client Error: Forbidden for url: https://www.science.org/doi/10.1126/sciadv.aaw9569
+
+I have not repeated the process or tried to troubleshoot any further. Someone else may be able to improve upon the process and ultimately extract more of their saves.
 
 ---
 
